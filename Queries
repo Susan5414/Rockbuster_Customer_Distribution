@@ -1,0 +1,87 @@
+#Count customers by store id
+
+SELECT   COUNT(customer_id)  AS customer_count
+FROM     customer 
+GROUP BY  store_id 
+
+
+#Count customers by active status
+
+SELECT   COUNT(customer_id)  AS customer_count
+FROM customer 
+GROUP BY active 
+
+
+#Count the total customers, aggregate the total revenue, and calculate the average spending by each customer
+
+SELECT       SUM(payment.amount) AS total_revenue  
+                    ,COUNT(DISTINCT customer.customer_id) AS customer_count  
+                    ,(SUM(payment.amount)/COUNT(DISTINCT customer.customer_id)) AS avg_amount_paid_by_customer 
+
+FROM   payment INNER JOIN    customer ON payment.customer_id = customer.customer_id 
+
+
+# Top 10 countries with the most customer count and the revenue they generated
+
+SELECT           country.country            
+                       ,COUNT(DISTINCT customer.customer_id) AS customer_count  
+                       ,SUM(payment.amount) AS amount_paid 
+
+FROM   payment 
+INNER JOIN    customer ON payment.customer_id = customer.customer_id 
+INNER JOIN    address ON customer.address_id = address.address_id 
+INNER JOIN     city ON address.city_id = city.city_id
+INNER JOIN     country ON city.country_id = country.country_id 
+GROUP BY       country 
+ORDER BY       customer_count DESC
+LIMIT                10 
+
+
+# To see the distribution of customers in the cities of the top 3 customer_count countries
+
+SELECT         country.country               
+                 ,city.city                    
+                 , COUNT(DISTINCT customer_id)   AS    customer_count 
+
+FROM                   customer  
+INNER JOIN         address  ON customer.address_id = address.address_id 
+INNER JOIN          city  ON address.city_id = city.city_id 
+INNER JOIN          country ON city.country_id = country.country_id
+WHERE country IN ('India','China', 'United States')
+GROUP BY   country, city
+ORDER BY    customer_count      DESC 
+
+
+# The average spending of the top 10 customer_count countries
+
+SELECT           country.country				
+                        ,COUNT(DISTINCT customer.customer_id) AS customer_count
+                        ,SUM(payment.amount) AS total_amount_paid		
+                        ,(SUM(payment.amount)/COUNT(DISTINCT customer.customer_id)) AS avg_amount_paid
+	
+FROM   payment						
+INNER JOIN    customer ON payment.customer_id = customer.customer_id	
+INNER JOIN    address ON customer.address_id = address.address_id	
+INNER JOIN     city ON address.city_id = city.city_id		
+INNER JOIN     country ON city.country_id = country.country_id						
+WHERE country IN ('India', 'China', 'United States', 'Japan', 'Mexico', 'Brazil' , 'Russian Federation', 'Philippines', 'Turkey', 'Indonesia')		
+
+GROUP BY       country						
+ORDER BY       avg_amount_paid  DESC
+
+
+# The top 10 countries of the highest average spending 
+
+SELECT           country.country				
+                       ,COUNT(DISTINCT customer.customer_id) AS customer_count
+                       ,SUM(payment.amount) AS total_amount_paid
+                       ,(SUM(payment.amount)/COUNT(DISTINCT customer.customer_id))    AS avg_amount_paid_by_customer
+
+FROM   payment				
+INNER JOIN    customer ON payment.customer_id = customer.customer_id	
+INNER JOIN    address ON customer.address_id = address.address_id	
+INNER JOIN     city ON address.city_id = city.city_id		
+INNER JOIN     country ON city.country_id = country.country_id		
+GROUP BY       country				
+ORDER BY       avg_amount_paid_by_customer DESC		
+LIMIT                10
