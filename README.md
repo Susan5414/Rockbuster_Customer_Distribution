@@ -10,8 +10,8 @@ The insights aim to facilitate informed resource allocation strategies, optimizi
 ### File Description
 * #### Data Dictionary
 It contains the metainformation of tables and their ERD in the dataset.
-* #### Queries in the project
-It contains all queries that drew insights for the analysis.
+* #### Queries and Results
+It contains all queries and the insights for the analysis.
 * #### Customer Distribution Presentation
 It is the presentation of the final findings to stakeholders.
 * #### Data Limitations
