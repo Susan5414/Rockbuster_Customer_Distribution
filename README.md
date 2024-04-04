@@ -1,6 +1,6 @@
-# SQL Project
+# Rockbuster Stealth Customer Distribution (SQL)
 ___
-## Rockbuster Stealth Customer Distribution Initiative 🎥
+## Project Initiative 🎥
 Rockbuster Stealth LLC, a global movie rental company once renowned for its physical store presence, now confronts formidable competition from streaming giants like Netflix and Amazon Prime. To counter this challenge, the management team at Rockbuster Stealth is strategizing to leverage its extensive movie licenses by introducing an online video rental service to retain competitiveness in the market.
 
 ### Content and Objective
